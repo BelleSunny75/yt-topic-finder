@@ -1,42 +1,11 @@
-from pydantic import BaseModel
-from typing import List
-from datetime import datetime
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 
-class LeaderboardEntry(BaseModel):
-    rank: int
-    video_id: str
-    title: str
-    channel_id: str
-    channel_title: str
-    vsr: float
-    views: int
-    subs: int
-    published_at: datetime | None
+# Database URL (Postgres in Docker)
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@db:5432/postgres")
 
-class LeaderboardResponse(BaseModel):
-    scope: str
-    scope_key: str
-    computed_at: datetime
-    entries: List[LeaderboardEntry]
-
-class SearchItem(BaseModel):
-    video_id: str
-    title: str
-    channel_id: str
-    channel_title: str
-    published_at: datetime | None
-    views: int
-    subs: int
-    vsr: float
-    tags: List[str] = []
-
-class SearchResponse(BaseModel):
-    total: int
-    items: List[SearchItem]
-
-class Category(BaseModel):
-    id: str
-    name: str
-
-class CategoriesResponse(BaseModel):
-    categories: List[Category]
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
