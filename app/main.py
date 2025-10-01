@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from .routers import leaderboards, search
+from app.routers import leaderboards, search
 
-app = FastAPI(title="YT Topic Finder API")
+app = FastAPI(title="YT Topic Finder")
 
-app.include_router(search.router)
-app.include_router(leaderboards.router)
+# Include routers
+app.include_router(leaderboards.router, prefix="/leaderboards", tags=["Leaderboards"])
+app.include_router(search.router, prefix="/search", tags=["Search"])
 
 @app.get("/")
 def root():
-    return {"ok": True, "service": "yt-topic-finder"}
+    return {"message": "Welcome to YT Topic Finder API"}
