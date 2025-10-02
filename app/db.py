@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
-# Use the same DB name as docker-compose (ytscout)
+# Matches docker-compose (service "db" with DB name ytscout)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql+psycopg2://postgres:postgres@db:5432/ytscout"
