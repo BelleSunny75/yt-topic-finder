@@ -1,8 +1,11 @@
-import os
 from dotenv import load_dotenv
+import os
 
-load_dotenv()
+# Load the .env file
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'), override=True)
 
-YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY", "")
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@db:5432/ytscout")
-REGION_CODES = [c.strip() for c in os.getenv("REGION_CODES", "US,GB,AU,IN,CA,DE,BR,JP").split(",") if c.strip()]
+# Environment variables
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./yt_topics.db")
+TIMEZONE = os.getenv("TIMEZONE", "UTC")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
