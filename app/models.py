@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, BigInteger, Boolean, Integer, TIMESTAMP, Numeric, Text, ARRAY, ForeignKey, JSON
+from sqlalchemy import Column, String, BigInteger, Boolean, Integer, TIMESTAMP, Numeric, Text, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 from .db import Base
 
@@ -24,7 +24,7 @@ class Video(Base):
     view_count = Column(BigInteger)
     like_count = Column(BigInteger)
     comment_count = Column(BigInteger)
-    tags = Column(ARRAY(String))
+    tags = Column(JSON)  # list of strings
 
     subscriber_count_at_fetch = Column(BigInteger)
     view_sub_ratio = Column(Numeric)
@@ -42,3 +42,4 @@ class Leaderboard(Base):
     scope_key = Column(String)        # categoryId or 'global'
     computed_at = Column(TIMESTAMP)
     entries = Column(JSON)            # list of dicts
+Switch ARRAY to JSON for SQLite compatibility
