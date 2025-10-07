@@ -1,12 +1,13 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-import os
+from dotenv import load_dotenv
 
-# Matches docker-compose (service "db" with DB name ytscout)
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql+psycopg2://postgres:postgres@db:5432/ytscout"
-)
+# Load .env that sits next to this file
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"), override=True)
+
+# Use SQLite by default for local runs (Docker not required)
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./yt_topics.db")
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, future=True)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False, future=True)
