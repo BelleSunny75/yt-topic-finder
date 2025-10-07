@@ -3,10 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
 
-# Load .env that sits next to this file
+# Load .env that sits beside this file
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"), override=True)
 
-# Use SQLite by default for local runs (Docker not required)
+# Default to SQLite locally; can be overridden by .env
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./yt_topics.db")
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, future=True)
